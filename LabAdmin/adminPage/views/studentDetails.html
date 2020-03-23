@@ -1,0 +1,232 @@
+<section class="wrapper">
+	<div class="table-agile-info">
+<div class="panel panel-default">
+<div class="panel-heading">
+	<div class="text-center">
+		<button class="btn btn-md btn-success" onclick="setClass('a')" id="sd_yr_a">A</button>
+		<button class="btn btn-md btn-info" onclick="setClass('b')" id="sd_yr_b">B</button>
+	</div>
+</div>
+<div class="row w3-res-tb">
+	<div class="col-sm-5 m-b-xs">
+	  <button class="btn btn-sm btn-default" data-toggle="modal" data-target="#myModal">Upload</button>
+	  <button class="btn btn-sm btn-default" data-toggle="modal" data-target="#myModal-1">Add</button>                              
+	  <button class="btn btn-sm btn-default" data-toggle="modal" data-target="#myModal-2">Delete</button>                
+	  <button class="btn btn-sm btn-default" data-toggle="modal" data-target="#myModal-3">Edit</button>                
+	</div>
+	<div class="col-sm-4">
+	</div>
+	<div class="col-sm-3">
+	  <div class="input-group">
+		<input type="text" class="input-sm form-control" placeholder="Search">
+		<span class="input-group-btn">
+		  <button class="btn btn-sm btn-default" type="button">Go!</button>
+		</span>
+	  </div>
+	</div>
+  </div>
+<div>
+  <table class="table" ui-jq="footable" id="studentData" ui-options='{
+	"paging": {
+	  "enabled": true
+	},
+	"filtering": {
+	  "enabled": true
+	},
+	"sorting": {
+	  "enabled": true
+	}}'>
+	<thead>
+	  <tr>
+		<th data-breakpoints="xs">SL.NO</th>
+		<th>Register Number</th>
+		<th>Name</th>
+		<th>Email ID</th>
+		<th data-breakpoints="xs sm md" data-title="DOB">Date of Birth</th>
+	  </tr>
+	</thead>
+	<tbody>
+	</tbody>
+  </table>
+</div>
+</div>
+</div>
+</section>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+				<h4 class="modal-title">Upload Student Data </h4>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+					<div class="row">
+					   <div class="col-md-6">
+						   
+						  <form method="POST" onsubmit="return fileUpload();" enctype="multipart/form-data" id="file-group">
+
+							  <div class="form-group files color">
+								<input type="hidden" id="custClass" name="stuClass" value=""/>
+								<input type="hidden" id="custSection" name="stuSection" value=""/>
+								<input type="file" class="form-control" name="studentdata" id="file-input" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,.xls, .xlsx, .ods, .xlt" required>
+							  </div>
+
+							  <div class="form-group">
+								<div class="text-center">
+									<input id="yeartwodata" type="submit" class="btn btn-default"></input><span><p id="errmsg" class="ml-2 mt-3"></p></span>
+								</div>
+							</div>
+
+						  </form>
+
+					  </div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-1" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+				<h4 class="modal-title">Add Student</h4>
+			</div>
+			<div class="modal-body">
+
+				<form class="form-horizontal"  style="padding-right:150px;padding-left: 60px;">
+					<div class="form-group has-feedback">
+					  <label class="control-label" for="stuRegNum">Register Number</label>
+					  <input type="text" class="form-control" id="stuRegNum" aria-describedby="stuRegNumStatus" required>
+					  <span class="glyphicon glyphicon-ok form-control-feedback sr-only" aria-hidden="true"></span>
+					  <span id="stuRegNumStatus" class="sr-only">(success)</span>
+					</div>
+
+					<div class="form-group has-feedback">
+						<label class="control-label" for="stuName">Name</label>
+						<input type="text" class="form-control" id="stuName" aria-describedby="stuNameStatus" required>
+						<span class="glyphicon glyphicon-ok form-control-feedback sr-only" aria-hidden="true"></span>
+						<span id="stuNameStatus" class="sr-only">(success)</span>
+					</div>
+
+					<div class="form-group has-feedback">
+						<label class="control-label" for="stuEmail">Email Id</label>
+						<input type="email" class="form-control" id="stuEmail" aria-describedby="stuEmailStatus" required>
+						<span class="glyphicon glyphicon-ok form-control-feedback sr-only" aria-hidden="true"></span>
+						<span id="stuEmailStatus" class="sr-only">(success)</span>
+					</div>
+
+					<div class="form-group has-feedback" data-provide="datepicker">
+						<label class="control-label" for="stuDate">Date of Birth</label>
+						<div class='input-group date' id='datetimepicker1' required>
+							<input type='date' class="form-control" id="stuDate"/>
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Submit</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-2" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+				<h4 class="modal-title">Form Tittle</h4>
+			</div>
+			<div class="modal-body">
+
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
+						<div class="col-lg-10">
+							<input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Password</label>
+						<div class="col-lg-10">
+							<input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-10">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox"> Remember me
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-10">
+							<button type="submit" class="btn btn-default">Sign in</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-3" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+				<h4 class="modal-title">Form Tittle</h4>
+			</div>
+			<div class="modal-body">
+
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
+						<div class="col-lg-10">
+							<input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Password</label>
+						<div class="col-lg-10">
+							<input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-10">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox"> Remember me
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-10">
+							<button type="submit" class="btn btn-default">Sign in</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
