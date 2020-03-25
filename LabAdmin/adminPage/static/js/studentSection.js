@@ -17,6 +17,7 @@ if (!window.indexedDB) {
 var secondyrData;
 var thirdsyrData;
 var fourthyrData;
+var yrData;
 
 $(document).ready(function () {
 
@@ -39,20 +40,21 @@ $(document).ready(function () {
     });
 
 });
-    window.addEventListener('load', function() {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
-      // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
+
+window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+    form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+        }
+        form.classList.add('was-validated');
     }, false);
+    });
+}, false);
 
 function setClass(className){
 
@@ -62,13 +64,9 @@ function setClass(className){
     }
     console.log(fetchData.currentClass,fetchData.currentSection);
 }
+
 function fetchStudentData(){
     var needFetch = true;
-    console.log(fetchData.currentClass);
-
-    
-
-
     if(needFetch)
     {
     $("#studentData tbody").empty();
@@ -80,6 +78,7 @@ function fetchStudentData(){
         data: fetchData,
         success : (result) => {
             if(result){
+                yrData = result;
                 console.log(result);
                 for(let ind = 0;ind < result.length;ind++){
                     let data = result[ind];
@@ -87,9 +86,6 @@ function fetchStudentData(){
                     let date = new Date(data.studentDOB).toISOString().slice(0,10);
                     $("#studentData tbody").append('<tr><td>'+ index + '</td>' + '<td>'+ data.studentRegId + '</td>' + '<td>'+ data.studentName + '</td>' + '<td>'+ data.studentMail + '</td>'+ '<td>'+ date + '</td></tr>' );
                 }
-            }
-            else{
-                console.log("no outpt");
             }
         }
     });
@@ -117,6 +113,7 @@ function fileUpload(){
             console.log(fetchData.currentClass,fetchData.currentSection);
             formdata.append('classParent',fetchData.currentClass);
             formdata.append('classSection',fetchData.currentSection);
+
             for (var value of formdata.values()) {
                 console.log(value); 
              }
@@ -162,4 +159,225 @@ catch(err){
 }
 }
 
+function regIdUpdate(){
+    if(fetchData.currentClass == "secondyear"){
+        document.getElementById("rollId").innerHTML = "18BCS";
+        document.getElementById("editrollId").innerHTML = "18BCS";
+        document.getElementById("altrollId").innerHTML = "18BCS";
+        $("#stuRegId").val("18BCS");
+        $("#stuYear").val("secondyear");
+        $("#altstuYear").val("secondyear");
+        $("#editrollId").val("18BCS");
+        $("#altrollId").val("18BCS"); 
+        $("#altstuRegId").val("18BCS");  
+                     
+    }
+    else if(fetchData.currentClass == "thirdyear"){
+        document.getElementById("rollId").innerHTML = "17BCS";
+        document.getElementById("editrollId").innerHTML = "17BCS";
+        document.getElementById("altrollId").innerHTML = "17BCS";
+        $("#stuRegId").val("17BCS");
+        $("#stuYear").val("thirdyear");
+        $("#altstuYear").val("thirdyear");
+        $("#editrollId").val("17BCS");
+        $("#altrollId").val("17BCS");
+        $("#altstuRegId").val("17BCS");  
+
+    }
+    else if(fetchData.currentClass == "fourthyear"){
+        document.getElementById("rollId").innerHTML = "16BCS";
+        document.getElementById("editrollId").innerHTML = "16BCS";
+        document.getElementById("altrollId").innerHTML = "16BCS";
+        $("#stuRegId").val("16BCS");
+        $("#stuYear").val("fourthyear");
+        $("#altstuYear").val("fourthyear");
+        $("#editrollId").val("16BCS");
+        $("#altrollId").val("16BCS");
+        $("#altstuRegId").val("16BCS");  
+
+    }
+}
+
+function addStudent(event){
+
+    event.preventDefault();
+
+    document.getElementById("addStudentDataErr").innerHTML = "";
+    $("#addStudentDataErr").val("");
+
+    var fileCatcher = $("#addStudent");
+     
+    console.log(fileCatcher.serialize());
+
+    $.ajax({
+        url: "/addStudent",
+        method: 'POST',
+        data: fileCatcher.serialize(),
+        processData: false,
+        success : (result) => {
+            if(result.status){
+                fetchStudentData();
+                alert("Student Added");
+                document.getElementById("addStudent").reset();
+                $("#myModal-1").modal('hide');
+                return false;
+            }
+            else{
+                document.getElementById("addStudentDataErr").innerHTML = "Already registered with Id";
+                $("#addStudentDataErr").val("Already registered with Id");
+            }
+        }
+    });
+    return false;
+
+}
+
+function editStudent(event){
+
+    event.preventDefault();
+
+    let regId = $("#editrollId").val() + $("#stuRegNumEdit").val();
+
+    let stuData = {
+        register : regId,
+        year: fetchData.currentClass
+    };
+
+        $.ajax({
+        url : '/deleteStudent',
+        method: 'POST',
+        data: JSON.stringify(stuData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        processData: false,
+        success : (result) => {
+            if(result){
+                fetchStudentData();
+                alert("Student Deleted");
+                document.getElementById("editStudent").reset();
+                return false;
+            }
+        }
+
+    });
+
+}
+
+function getStudentCheckStatus(event){
+    document.getElementById("editStudentDataErr").innerHTML = "";
+    document.getElementById("stuNameEdit").innerHTML = "";
+    document.getElementById("stuEmailEdit").innerHTML = "";
+    $("#stuNameEdit").val("");
+    $("#stuEmailEdit").val("");
+    event.preventDefault();
+
+    let regId = $("#editrollId").val() + $("#stuRegNumEdit").val();
+    let stuData = {
+        register : regId
+    };
+    console.log(yrData);
+
+    for(let ele in yrData){
+        if(regId == yrData[ele].studentRegId){
+            $("#stuNameEdit").val(yrData[ele].studentName);
+            $("#stuEmailEdit").val(yrData[ele].studentMail);
+            $('#editStudentData').removeAttr('disabled');
+            return false;
+        }
+    }
+    document.getElementById("editStudentDataErr").innerHTML = "No student Found";
+}
+
+
+function updateValues(event){
+
+    document.getElementById("altStudentDataErr").innerHTML = "";
+    document.getElementById("altstuName").innerHTML = "";
+    document.getElementById("altstuEmail").innerHTML = "";
+    document.getElementById("altstuDate").innerHTML = "";
+    $("#altstuName").val("");
+    $("#altstuEmail").val("");
+    $("#altstuDate").val("");
+    event.preventDefault();
+
+    let regId = $("#altrollId").val() + $("#altstuRegNum").val();
+
+    $("#altstuRegId").val(regId);
+    console.log(yrData);
+
+    for(let ele in yrData){
+        if(regId == yrData[ele].studentRegId){
+
+            let date = new Date(yrData[ele].studentDOB).toISOString().slice(0,10);
+            $("#altstuName").val(yrData[ele].studentName);
+            $("#altstuEmail").val(yrData[ele].studentMail);
+            $("#altsel1").val(yrData[ele].studentSection);
+            $("#altstuDate").val(date);
+            $("#alterStudentCheck").addClass("hide");
+            $("#alterStudentChange").removeClass("hide");
+            $("#altstuRegNum").attr("disabled", "disabled");
+            $("#altstuName").removeAttr("disabled", "disabled");
+            $("#altstuEmail").removeAttr("disabled", "disabled");
+            $("#altsel1").removeAttr("disabled", "disabled");
+            $("#altstuDate").removeAttr("disabled", "disabled");
+            $("#altStudentData").removeAttr("disabled", "disabled");
+            return false;
+
+        }
+    }
+    document.getElementById("altStudentDataErr").innerHTML = "No student Found";
+}
+
+function changeValues(event){
+    event.preventDefault();
+
+    document.getElementById("alterStudentData").reset();
+    $("#altstuName").val("");
+    $("#altstuEmail").val("");
+    $("#altsel1").val("");
+    $("#altstuDate").val("");
+
+    $("#alterStudentCheck").removeClass("hide");
+    $("#alterStudentChange").addClass("hide");
+    $("#altstuRegNum").removeAttr("disabled", "disabled");
+    $("#altstuName").attr("disabled", "disabled");
+    $("#altstuEmail").attr("disabled", "disabled");
+    $("#altsel1").attr("disabled", "disabled");
+    $("#altstuDate").attr("disabled", "disabled");
+    $("#altStudentData").attr("disabled", "disabled");
+    return false;
+}
+
+
+function alterStudent(event){
+    event.preventDefault();
+
+    document.getElementById("altStudentDataErr").innerHTML = "";
+    
+    var fileCatcher = $("#alterStudentData");
+     
+    console.log(fileCatcher.serialize());
+
+    $.ajax({
+        url: "/alterStudent",
+        method: 'PUT',
+        data: fileCatcher.serialize(),
+        processData: false,
+        success : (result) => {
+            if(result.status){
+                console.log(result);
+                alert("Updated StudentData");
+                document.getElementById("alterStudentData").reset();
+                fetchStudentData();
+                return false;
+
+            }
+            else{
+                document.getElementById("addStudentDataErr").innerHTML = "Already registered with Id";
+                $("#addStudentDataErr").val("Already registered with Id");
+            }
+        }
+    });
+    return false;
+}
 

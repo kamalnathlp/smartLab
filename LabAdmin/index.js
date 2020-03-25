@@ -90,7 +90,7 @@ app.get('/fetchStudent',jsonparser,(req,res) =>{
   classParent = req.query.currentClass;
   className = req.query.currentSection.toUpperCase();
 
-  let sql = "SELECT studentRegId,studentName,studentMail,studentDOB FROM " + classParent + " WHERE studentSection LIKE " + '\'' + className +'\' ORDER BY studentRegId;';
+  let sql = "SELECT studentRegId,studentName,studentSection,studentMail,studentDOB FROM " + classParent + " WHERE studentSection LIKE " + '\'' + className +'\' ORDER BY studentRegId;';
 
   db.query(sql,(err,rows)=>{
     if(err) throw err;
@@ -155,6 +155,143 @@ app.post('/fileUpload',upload.single('studentdata'),(req,res) =>{
    // console.log(err);
     res.status(500).send(err);
   }
+});
+
+app.post('/addStudent',(req,res)=>{
+
+    // console.log(JSON.parse(req));
+    console.log(req);
+    if(!req.body){
+        res.status(400).send({
+          status: false,
+          message: 'Proper Input'
+      });
+    }
+    else{
+
+      let registerId = req.body.stuRegId + req.body.stuRegNum;
+      let studentName = req.body.stuName;
+      let studentEmail = req.body.stuEmail;
+      let studentSection = req.body.stuSection;
+      let StudentDate = req.body.stuDate;
+      let stuYear = req.body.stuYear;
+      let records = [[registerId,studentName,studentSection,studentEmail,StudentDate]];
+      var checkStudent = false;
+
+      let checkSql = "SELECT 1 FROM "+ stuYear+" WHERE studentRegId=? ORDER BY studentRegId LIMIT 1;";
+
+      db.query(checkSql,[registerId],(err,result,fields)=>{
+
+        if(err) throw err;
+        console.log(result);
+        if(!result.length > 0){
+          let sql = "INSERT INTO "+stuYear+" (studentRegId,studentName,studentSection,studentMail,studentDOB) VALUES (?);";
+
+          db.query(sql,records,(err, result, fields)=>{
+  
+            if(err) throw err;
+            console.log(result);
+  
+            console.log("Number of rows affected : " + result.affectedRows);
+            console.log("Number of records affected with warning : " + result.warningCount);
+            console.log("Message from MySQL Server : " + result.message);
+              res.status(200).send({
+                status: true,
+                message: '2'
+              });
+          });
+        }
+        else{
+          res.send({
+            status: false,
+            message: '1'
+          });
+        }
+      });
+    }
+    
+});
+
+app.post('/deleteStudent',(req,res)=>{
+
+  if(!req.body.register){
+    res.send({
+      status: false,
+      message: '2'
+    });
+  }
+else{
+  let sql = "DELETE FROM "+req.body.year+" WHERE studentRegId=?;";
+  db.query(sql,req.body.register,(err,result,fields)=>{
+
+    if(err){
+      res.status(400).send({
+        message: err.toString()
+      });
+    }
+    else{
+      res.status(200).send({
+        message: JSON.stringify(result)
+      });
+    }
+
+  });
+}
+});
+
+app.put('/alterStudent',(req,res)=>{
+  console.log(req);
+  if(!req.body){
+      res.send({
+        status: false,
+        message: 'Proper Input'
+    });
+  }
+  else{
+
+    let registerId = req.body.altstuRegId;
+    let studentName = req.body.altstuName;
+    let studentEmail = req.body.altstuEmail;
+    let studentSection = req.body.altstuSection;
+    let StudentDate = req.body.altstuDate;
+    let stuYear = req.body.altstuYear;
+    let records = [studentName,studentSection,studentEmail,StudentDate,registerId];
+    var checkStudent = false;
+
+    let checkSql = "SELECT 1 FROM "+ stuYear+" WHERE studentRegId=? ORDER BY studentRegId LIMIT 1;";
+
+    db.query(checkSql,[registerId],(err,result,fields)=>{
+
+      if(err) throw err;
+      console.log("Processes "+result.length);
+      if(result.length > 0){
+        let sql = "UPDATE "+stuYear+" SET studentName=?, studentSection=?, studentMail=?, studentDOB=? WHERE studentRegId=?;";
+
+        db.query(sql,records,(err, result, fields)=>{
+
+          console.log(sql);
+
+          if(err) throw err;
+          console.log(result);
+
+          console.log("Number of rows affected : " + result.affectedRows);
+          console.log("Number of records affected with warning : " + result.warningCount);
+          console.log("Message from MySQL Server : " + result.message);
+            res.send({
+              status: true,
+              message: '2'
+            });
+        });
+      }
+      else{
+        res.send({
+          status: false,
+          message: '1'
+        });
+      }
+    });
+  }
+
 });
 
 app.listen(port, () => console.log(`listening on port ${port}!`));
