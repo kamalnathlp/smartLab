@@ -12,9 +12,13 @@
              $("#main-content").load('/studentDetails');
          });
 
-         $('#sd_yr_2_a').click(function(){
+         $('#sd_three').click(function(){
+            $("#main-content").load('/studentDetails');
+        });
 
-         });
+        $('#sd_four').click(function(){
+            $("#main-content").load('/studentDetails');
+        });
 
          /*==Left Navigation Accordion ==*/
         if ($.fn.dcAccordion) {
