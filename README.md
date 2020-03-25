@@ -23,13 +23,8 @@ Change your MySql values in your [db_config.js](https://github.com/kamalnathlp/s
  http://localhost:3001/ [Login Page]  
  http://localhost:3001/admin/ [Admin Page]  
  
- 
- ![Image of AdminLogin]
- (https://github.com/kamalnathlp/smartLab/blob/master/screenShots/admin_git.png)
- 
- 
- ![Image of HODLogin]
- (https://github.com/kamalnathlp/smartLab/blob/master/screenShots/hod_git.png)
- 
-  ![Image of AdminPanel]
- (https://github.com/kamalnathlp/smartLab/blob/master/screenShots/admin_panel_git.png)
+![Image of AdminLogin](https://github.com/kamalnathlp/smartLab/blob/master/screenShots/admin_git.png)
+
+![Image of HODLogin](https://github.com/kamalnathlp/smartLab/blob/master/screenShots/hod_git.png)
+
+![Image of AdminPanel](https://github.com/kamalnathlp/smartLab/blob/master/screenShots/admin_panel_git.png)
