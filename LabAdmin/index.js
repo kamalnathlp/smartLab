@@ -46,43 +46,23 @@ app.use("/login", express.static(__dirname + "/adminPage/static"));
 app.use("/typography", express.static(__dirname + "/adminPage/static"));
 
 app.get('/', (req, res) => {
-  res.sendFile('./loginAuth/Index.html', { root: __dirname });
+  res.render('Index.ejs', { root: __dirname });
 });
 
 app.get('/admin', (req, res) => {
-  res.sendFile('./adminPage/index.html', { root: __dirname });
+  res.render('index.ejs', { root: __dirname });
 });
 
 app.get('/login', (req, res) => {
-  res.sendFile('./adminPage/views/login.html', { root: __dirname });
+  res.render('login.ejs', { root: __dirname });
 });
 
 app.get('/dash',(req, res) => {
-  fs.readFile("./adminPage/views/dashboard.html", function (error, pgResp) {
-    if (error) {
-        res.writeHead(404);
-        res.write('Contents you are looking are Not Found');
-    } else {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write(pgResp);
-    }
-     
-    res.end();
-});
+  res.render('dashboard.ejs',{root: __dirname});
 });
 
 app.get('/studentDetails', (req, res) => {
-  fs.readFile("./adminPage/views/studentDetails.html", function (error, pgResp) {
-    if (error) {
-        res.writeHead(404);
-        res.write('Contents you are looking are Not Found');
-    } else {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write(pgResp);
-    }
-     
-    res.end();
-});
+  res.render('studentDetails.ejs',{root: __dirname})
 });
 
 app.get('/fetchStudent',jsonparser,(req,res) =>{
