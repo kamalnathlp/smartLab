@@ -2,7 +2,7 @@
   "name": "labadmin",
   "version": "1.0.0",
   "description": "Lab Administrator files and dev env",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,9 +19,18 @@
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
     "multer": "^1.4.2",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "mysql2": "2.1.0",
+    "sequelize": "5.21.5"
   },
   "devDependencies": {
+    "debug": "4.1.1",
+    "eslint": "6.8.0",
+    "eslint-config-standard": "14.1.1",
+    "eslint-plugin-import": "2.20.1",
+    "eslint-plugin-node": "11.0.0",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-standard": "4.0.1",
     "nodemon": "^2.0.2"
   }
 }
