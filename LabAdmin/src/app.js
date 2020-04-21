@@ -1,10 +1,9 @@
-const { app,port } = require('./index');
-const { db }  = require('../src/models/db_config');
-const userModel = require('../src/controllers/users');
-const log = require('debug')('app:run');
+const {db}  = require('../src/models/db_config');
+const {app}  = require('../src/services/index');
 
 async function run(){
-    await db.sync().then(()=>{
+    return await db.sync().then(()=>{
+        app.listen(8000, () => console.log(`Server started  on ${8000}!`)); 
         console.log("Database ready");
     }).catch((err)=>{
         console.log(err.toString());        
@@ -12,5 +11,3 @@ async function run(){
 }
 
 run()
-
-userModel.createUser("admin","admin","Dr.Thilagamani","s","admin@yopmail.com",false);

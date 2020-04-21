@@ -1,94 +1,153 @@
+
 <!DOCTYPE html>
-<html>
 <head>
-<title>Smart Lab</title>
-<!-- custom-theme -->
+<title>Admin Panel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="mkce smart lab cse"/>
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-		function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!-- //custom-theme -->
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-<!-- js -->
-<script src="js/jquery-1.9.1.min.js"></script>
-<!--// js -->
-<link rel="stylesheet" type="text/css" href="css/easy-responsive-tabs.css " />
- <link href="//fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- bootstrap-css -->
+<link rel="stylesheet" href="css/bootstrap.min.css" >
+<!-- //bootstrap-css -->
+<!-- Custom CSS -->
+<link href="css/style.css" rel='stylesheet' type='text/css' />
+<link href="css/style-responsive.css" rel="stylesheet"/>
+<!-- font CSS -->
+<link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<!-- font-awesome icons -->
+<link rel="stylesheet" href="css/font.css" type="text/css"/>
+<link href="css/font-awesome.css" rel="stylesheet"> 
+<link rel="stylesheet" href="css/morris.css" type="text/css"/>
+<!-- calendar -->
+<link rel="stylesheet" href="css/monthly.css">
+<!-- //calendar -->
+<link ref="stylesheet" type="text/css" href="dist/snackbar.min.css" /> 
+<script src="dist/snackbar.min.js"></script>
+<!-- //font-awesome icons -->
+<script src="js/jquery2.0.3.min.js"></script>
+<script src="js/raphael-min.js"></script>
 </head>
-<body class="bg agileinfo">
-   <h1 class="agile_head text-center"> M. Kumarasamy College of Engineering, Karur</h1>
-   <div class="w3layouts_main wrap">
-    <!--Horizontal Tab-->
-        <div id="parentHorizontalTab_agile">
-            <ul class="resp-tabs-list hor_1">
-                <li>Lab Admin</li>
-                <li>HOD</li>
-            </ul>
-            <div class="resp-tabs-container hor_1">
-               <div class="w3_agile_login">
-                    <form action="#" method="post" class="agile_form">
-					  <p>UserName</p>
-					  <input type="text" name="a_username" required="required" />
-					  <p>Password</p>
-					  <input type="password" name="a_password" required="required" class="password" /> 
-					  <input type="submit" value="LogIn" class="agileinfo" />
-					</form>                    
-                </div>
-                <div class="w3_agile_login">
-                    <form action="#" method="post" class="agile_form">
-						<p>UserName</p>
-						<input type="text" name="h_username" required="required" />
-						<p>Password</p>
-						<input type="password" name="h_password" required="required" class="password" /> 
-
-						<input type="submit" value="LogIn" class="agileinfo" />
-					  </form>
-				</div>
-            </div>
-        </div>
-		 <!-- //Horizontal Tab -->
+<body>
+<section id="container">
+<!--header start-->
+<header class="header fixed-top clearfix">
+<!--logo start-->
+<div class="brand">
+    <a href="index.html" class="logo">
+        Oracle Lab
+    </a>
+    <div class="sidebar-toggle-box">
+        <div class="fa fa-bars"></div>
     </div>
-	<div class="agileits_w3layouts_copyright text-center">
-			<p>© 2020 Smart Laboratory. All rights reserved | Design by <a href="">Department of CSE</a></p>
-	</div>
-<!--tabs-->
-<script src="js/easyResponsiveTabs.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-	//Horizontal Tab
-	$('#parentHorizontalTab_agile').easyResponsiveTabs({
-		type: 'default', //Types: default, vertical, accordion
-		width: 'auto', //auto or any width like 600px
-		fit: true, // 100% fit in a container
-		tabidentify: 'hor_1', // The tab groups identifier
-		activate: function(event) { // Callback function if tab is switched
-			var $tab = $(this);
-			var $info = $('#nested-tabInfo');
-			var $name = $('span', $info);
-			$name.text($tab.text());
-			$info.show();
-		}
-	});
-});
-</script>
-<script type="text/javascript">
-		window.onload = function () {
-			document.getElementById("password1").onchange = validatePassword;
-			document.getElementById("password2").onchange = validatePassword;
-		}
-		function validatePassword(){
-			var pass2=document.getElementById("password2").value;
-			var pass1=document.getElementById("password1").value;
-			if(pass1!=pass2)
-				document.getElementById("password2").setCustomValidity("Passwords Don't Match");
-			else
-				document.getElementById("password2").setCustomValidity('');	 
-				//empty string means no validation error
-		}
+</div>
+<!--logo end-->
+<div class="top-nav clearfix">
+    <!--search & user info start-->
+    <ul class="nav pull-right top-menu">
+        <li>
+            <input type="text" class="form-control search" placeholder=" Search">
+        </li>
+        <!-- user login dropdown start-->
+        <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <img alt="" src="images/fe.png">
+                <span class="username">Sornapriya</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu extended logout">
+                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                <li><a href="/login"><i class="fa fa-key"></i> Log Out</a></li>
+            </ul>
+        </li>
+        <!-- user login dropdown end -->
+       
+    </ul>
+    <!--search & user info end-->
+</div>
+</header>
+<!--header end-->
+<!--sidebar start-->
+<aside>
+    <div id="sidebar" class="nav-collapse">
+        <!-- sidebar menu start-->
+        <div class="leftside-navigation">
+            <ul class="sidebar-menu" id="nav-accordion">
+                <li id="l_dash">
+                    <a class="active" href="javascript:;">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li> 
+                <li class="sub-menu">
+                    <a>
+                        <i class="fa fa-book"></i>
+                        <span>Student Details</span>
+                    </a>
+                    <ul class="sub">
+						<li id="sd_two"><a>Second Year</a></li>
+						<li id="sd_three"><a>Pre-final Year</a></li>
+                        <li id="sd_four"><a>Final Year</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-th"></i>
+                        <span>Lab Maintanance</span>
+                    </a>
+                    <ul class="sub">
+						<li><a href="basic_table.html">Stock Registry</a></li>
+						<li><a href="basic_table.html">System Maintanance</a></li>
+						<li><a href="basic_table.html">System Damage Registry</a></li>
+                        <li><a href="responsive_table.html">Moving Registry</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-tasks"></i>
+                        <span>System Usage</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="form_component.html">Live Staus</a></li>
+                        <li><a href="form_validation.html">Report</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-envelope"></i>
+                        <span>Attendance </span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="mail_compose.html">Attendance Report</a></li>
+                    </ul>
+                </li>
 
-</script>
-<!--//tabs-->
+            </ul>            </div>
+        <!-- sidebar menu end-->
+    </div>
+</aside>
+<!--sidebar end-->
+<!--main content start-->
+<section id="main-content">
+
+ <!-- footer -->
+		  <div class="footer">
+			<div class="wthree-copyright">
+			  <p>© 2020 SmartLab. All rights reserved | Design by <a href="">Department of CSE</a></p>
+			</div>
+		  </div>
+  <!-- / footer -->
+</section>
+<!--main content end-->
+</section>
+
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="js/jquery.slimscroll.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/studentSection.js"></script>
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+<script src="js/jquery.scrollTo.js"></script>
 </body>
 </html>
-

@@ -4,7 +4,8 @@
   "description": "Lab Administrator files and dev env",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "nodemon app.js"
   },
   "author": "Kamalnath LP",
   "license": "ISC",
